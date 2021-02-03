@@ -1,6 +1,4 @@
-const { lstat } = require("fs")
 const http = require("http")
-const { stdout } = require("process")
 const context = require("./context")
 const request = require("./request")
 const response = require("./response")
