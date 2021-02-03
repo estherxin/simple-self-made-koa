@@ -44,6 +44,7 @@ function compose(middleware){
 }
 class Koa extends EventEmitter {
     constructor(options){
+        super()
         this.options = options
         this.context = context
         this.request = request
