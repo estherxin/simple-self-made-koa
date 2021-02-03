@@ -27,7 +27,7 @@ const response = require("./response")
 //         }
 // }
 function compose(middleware){
-    return function(ctx,next){
+    return function(ctx){
         let copy = middleware.slice(1)
         let res=  copy.reduce((accumulator, currentFn)=>{
                 try {
