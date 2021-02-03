@@ -1,31 +1,31 @@
 const http = require("http")
 const context = require("./context")
 const request = require("./request")
-const response = require("./response")
-function compose(middleware){
-    return function(ctx,next){
-        let index = -1
-        return dispatch(0)
-        function dispatch(i){
-            if(i <= index ){
-                return Promise.reject(new Error("what!!"))
-            }
-                index = i
-                fn =middleware[i]
-                if (i === middleware.length){fn = next }
-                if(!fn){
-                    return Promise.resolve()
-                }
-                try {
-                    return Promise.resolve(fn(ctx,dispatch.bind(null,++i)))
+// const response = require("./response")
+// function compose(middleware){
+//     return function(ctx,next){
+//         let index = -1
+//         return dispatch(0)
+//         function dispatch(i){
+//             if(i <= index ){
+//                 return Promise.reject(new Error("what!!"))
+//             }
+//                 index = i
+//                 fn =middleware[i]
+//                 if (i === middleware.length){fn = next }
+//                 if(!fn){
+//                     return Promise.resolve()
+//                 }
+//                 try {
+//                     return Promise.resolve(fn(ctx,dispatch.bind(null,++i)))
 
-                } catch (error) {
-                    return Promise.reject(error)
+//                 } catch (error) {
+//                     return Promise.reject(error)
 
-                }
-            }
-        }
-}
+//                 }
+//             }
+//         }
+// }
 function compose(middleware){
     return function(ctx,next){
         let copy = middleware.slice(1)
@@ -41,27 +41,6 @@ function compose(middleware){
             
         },Promise.resolve(middleware[0](ctx,()=>{})))
         return res
-        // let index = -1
-        // return dispatch(0)
-        // function dispatch(i){
-        //     if(i <= index ){
-        //         return Promise.reject(new Error("what!!"))
-        //     }
-        //         index = i
-        //         fn =middleware[i]
-        //         if (i === middleware.length){fn = next }
-        //         if(!fn){
-        //             return Promise.resolve()
-        //         }
-        //         try {
-        //             return Promise.resolve(fn(ctx,dispatch.bind(null,++i)))
-
-        //         } catch (error) {
-        //             return Promise.reject(error)
-
-        //         }
-        //     }
-        
     }
 }
 class Koa {
