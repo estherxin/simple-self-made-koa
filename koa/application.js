@@ -30,16 +30,13 @@ function compose(middleware){
     return function(ctx,next){
         let copy = middleware.slice(1)
         let res=  copy.reduce((accumulator, currentFn)=>{
-            if(!currentFn) {
-                return Promise.resolve()
-            }
                 try {
                     return Promise.resolve(currentFn(ctx,()=>{return accumulator}))
                 } catch (error) {
                     return Promise.reject(error)
                 }
             
-        },Promise.resolve(middleware[0](ctx,()=>{})))
+        },Promise.resolve(middleware[0](ctx,()=>{Promise.resolve()})))
         return res
     }
 }

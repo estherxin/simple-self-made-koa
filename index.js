@@ -2,14 +2,14 @@ const koa = require("./koa/application")
 // const router = require('koa-router')();
 const app = new koa()
 app.use(async (ctx,next)=>{
-    ctx.body = ctx.body +"111"
+    ctx.body = ctx.body +"1a"
     // console.time("timer");
     await next()
-    ctx.body = ctx.body +"333"
+    ctx.body = ctx.body +"3c"
    // console.timeEnd("timer");
 })
 app.use(async (ctx,next)=>{
-    ctx.body = ctx.body + "222"
+    ctx.body = ctx.body + "2b"
     await next()
 })
 app.listen(3000);
