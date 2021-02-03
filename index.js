@@ -6,7 +6,7 @@ app.use(async (ctx,next)=>{
     // ctx.body = ctx.body +"1a"
     // ctx.body = {a:1}
     ctx.body = fs.createReadStream("./package.json")
-    ctx.body = ""
+    // ctx.body = ""
     await next()
     // ctx.body = ctx.body +"3c"
 })
