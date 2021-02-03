@@ -29,13 +29,13 @@ const response = require("./response")
 function compose(middleware){
     return function(ctx){
         let copy = middleware.slice(1)
-        let res=  copy.reduce((accumulator, currentFn)=>{
+        let res = copy.reduce((accumulator, currentFn)=>{
                 try {
                     return Promise.resolve(currentFn(ctx,()=>{return accumulator}))
                 } catch (error) {
                     return Promise.reject(error)
                 }
-            
+        // inner （the last one）
         },Promise.resolve(middleware[0](ctx,()=>{Promise.resolve()})))
         return res
     }
