@@ -1,3 +1,4 @@
+const { EventEmitter } = require("events")
 const http = require("http")
 const context = require("./context")
 const request = require("./request")
@@ -41,7 +42,7 @@ function compose(middleware){
         return res
     }
 }
-class Koa {
+class Koa extends EventEmitter {
     constructor(options){
         this.options = options
         this.context = context
@@ -76,7 +77,9 @@ class Koa {
             ctx.res.end(body);
         }
     }
-    handleError(){}
+    handleError(err){
+        this.emit("error",err)
+    }
     createContext(req,res){
         //不会破坏原对象，方便扩展
         let ctx = Object.create(this.context)
