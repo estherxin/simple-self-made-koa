@@ -35,13 +35,12 @@ function compose(middleware){
             if(!currentFn) {
                 return Promise.resolve()
             }
-            if(currentFn){
                 try {
                     return Promise.resolve(currentFn(ctx,()=>{return accumulator}))
                 } catch (error) {
                     return Promise.reject(error)
                 }
-            }
+            
         },Promise.resolve(middleware[0](ctx,()=>{})))
         return res
         // let index = -1
