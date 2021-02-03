@@ -1,7 +1,7 @@
 const http = require("http")
 const context = require("./context")
 const request = require("./request")
-// const response = require("./response")
+const response = require("./response")
 // function compose(middleware){
 //     return function(ctx,next){
 //         let index = -1
