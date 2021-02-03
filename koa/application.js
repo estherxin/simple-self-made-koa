@@ -3,6 +3,7 @@ const http = require("http")
 const context = require("./context")
 const request = require("./request")
 const response = require("./response")
+const Stream = require("stream")
 // function compose(middleware){
 //     return function(ctx,next){
 //         let index = -1
@@ -70,15 +71,23 @@ class Koa extends EventEmitter {
     }
     handleRequest(fnMiddleWare,req,res){
         let ctx = this.createContext(req,res)
-        fnMiddleWare(ctx).then(this.handleResponse(ctx)).catch(this.handleError)
+        fnMiddleWare(ctx).then(this.handleResponse(ctx)).catch(this.handleError.bind(this))
     }
     handleResponse(ctx){
         return function (){
             let body = ctx.body;
+            if( body instanceof Stream){
+                return body.pipe(ctx.res);
+             }
+            if(typeof body === 'object'){
+               return ctx.res.end(JSON.stringify(body));
+            }
             ctx.res.end(body);
         }
     }
     handleError(err){
+
+        console.log(this);
         this.emit("error",err)
     }
     createContext(req,res){
