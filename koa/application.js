@@ -1,4 +1,6 @@
+const { lstat } = require("fs")
 const http = require("http")
+const { stdout } = require("process")
 const context = require("./context")
 const request = require("./request")
 const response = require("./response")
@@ -25,6 +27,45 @@ function compose(middleware){
                 }
             }
         }
+}
+function compose(middleware){
+    return function(ctx,next){
+        let copy = middleware.slice(1)
+        let res=  copy.reduce((accumulator, currentFn)=>{
+            if(!currentFn) {
+                return Promise.resolve()
+            }
+            if(currentFn){
+                try {
+                    return Promise.resolve(currentFn(ctx,()=>{return accumulator}))
+                } catch (error) {
+                    return Promise.reject(error)
+                }
+            }
+        },Promise.resolve(middleware[0](ctx,()=>{})))
+        return res
+        // let index = -1
+        // return dispatch(0)
+        // function dispatch(i){
+        //     if(i <= index ){
+        //         return Promise.reject(new Error("what!!"))
+        //     }
+        //         index = i
+        //         fn =middleware[i]
+        //         if (i === middleware.length){fn = next }
+        //         if(!fn){
+        //             return Promise.resolve()
+        //         }
+        //         try {
+        //             return Promise.resolve(fn(ctx,dispatch.bind(null,++i)))
+
+        //         } catch (error) {
+        //             return Promise.reject(error)
+
+        //         }
+        //     }
+        
+    }
 }
 class Koa {
     constructor(options){
