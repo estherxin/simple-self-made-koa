@@ -83,6 +83,10 @@ class Koa extends EventEmitter {
             if(typeof body === 'object'){
                return ctx.res.end(JSON.stringify(body));
             }
+            if( body === ''){
+                ctx.res.statusCode = 404
+                return ctx.res.end("not found");
+             }
             ctx.res.end(body);
         }
     }
