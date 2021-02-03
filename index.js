@@ -5,7 +5,7 @@ const app = new koa()
 app.use(async (ctx,next)=>{
     // ctx.body = ctx.body +"1a"
     // ctx.body = {a:1}
-    ctx.body = fs.createReadStream("./package.json")
+    ctx.body = fs.createReadStream("./gitignore")
     await next()
     // ctx.body = ctx.body +"3c"
 })

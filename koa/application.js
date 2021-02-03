@@ -34,7 +34,8 @@ function compose(middleware){
         let copy = middleware.slice(1)
         let res = copy.reduce((accumulator, currentFn)=>{
                 try {
-                    return Promise.resolve(currentFn(ctx,()=>{return accumulator}))
+                    return Promise.resolve(
+                        currentFn(ctx,()=>{return accumulator}))
                 } catch (error) {
                     return Promise.reject(error)
                 }
